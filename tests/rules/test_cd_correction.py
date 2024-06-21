@@ -1,5 +1,5 @@
 import pytest
-from thefuck.rules.cd_correction import match
+from thefuck.rules.cd_correction import match, get_new_command, branch_coverage
 from thefuck.types import Command
 
 
@@ -12,6 +12,16 @@ from thefuck.types import Command
 def test_match(command):
     assert match(command)
 
+@pytest.mark.parametrize('command', [
+    Command('cd foo', 'cd: foo: No such file or directory'),
+    Command('cd foo/bar/baz',
+            'cd: foo: No such file or directory'),
+    Command('cd foo/bar/baz', 'cd: can\'t cd to foo/bar/baz'),
+    Command('cd /foo/bar/', 'cd: The directory "/foo/bar/" does not exist')])
+def test_gew_new_command(command):
+    print(branch_coverage)
+    assert get_new_command(command)
+    print(branch_coverage)
 
 @pytest.mark.parametrize('command', [
     Command('cd foo', ''), Command('', '')])
