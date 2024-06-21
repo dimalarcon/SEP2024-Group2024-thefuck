@@ -11,4 +11,4 @@
 - **Number of lines of code:** 547801 (54.7 KLOC)
 - **Tool used to measure the number of lines of code:** lizard
 
-![Lizard-KLOC-Screenshot-output-command](/screenshots/dima/lizard-kloc(21-06-2024_16-39-00).png)
+![Lizard-KLOC-Screenshot-output-command](/screenshots/lizard-kloc(21-06-2024_16-39-00).png)
