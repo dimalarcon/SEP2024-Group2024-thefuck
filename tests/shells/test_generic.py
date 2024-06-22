@@ -2,6 +2,8 @@
 
 import pytest
 from thefuck.shells import Generic
+from unittest.mock import mock_open, patch
+
 
 
 class TestGeneric(object):
@@ -54,3 +56,29 @@ class TestGeneric(object):
         assert shell.info() == expected_info
         assert warn_mock.called is warn
         assert shell._get_version.called
+
+        # ---------------------------------------------------------
+
+    def test_instant_mode_alias(self, shell, mocker):
+        mocker.patch.object(Generic, 'app_alias', return_value='alias test_alias')
+        result = shell.instant_mode_alias('test_alias')
+        assert 'alias test_alias' in result
+
+    def test_get_version(self, shell):
+        result = shell._get_version()
+        assert result == ''
+
+    def test_get_history_line(self, shell, mocker):
+        # Mock _get_history_file_name to return a mock history file name
+        mocker.patch.object(Generic, '_get_history_file_name', return_value='mock_history.txt')
+
+        # Mock the content of the history file with one line
+        mock_content = 'ls -l\n'
+        mock_open_func = mock_open(read_data=mock_content)
+        with patch('io.open', mock_open_func):
+            lines = list(shell._get_history_lines())
+
+        assert len(lines) == 0  # Ensure only one line is read from the history file
+        result = shell._get_history_line('ls -l')
+        assert result == ''
+
