@@ -7,9 +7,21 @@ from ..const import ARGUMENT_PLACEHOLDER, USER_COMMAND_MARK
 from ..utils import DEVNULL, memoize
 from .generic import Generic
 
+branch_coverage = {
+    "instant_mode_alias": False,
+    "instant_mode_alias_if": False,
+    "how_to_configure_else" : False,
+    "how_to_configure_elif" : False
+}
+
 
 class Bash(Generic):
     friendly_name = 'Bash'
+
+    def print_coverage(self, filename="coverage_report.txt"):
+        with open(filename, 'w') as file:
+            for branch, hit in branch_coverage.items():
+                file.write(f"{branch} was {'HIT' if hit else 'not hit'}\n")
 
     def app_alias(self, alias_name):
         # It is VERY important to have the variables declared WITHIN the function
@@ -35,7 +47,9 @@ class Bash(Generic):
                            if settings.alter_history else ''))
 
     def instant_mode_alias(self, alias_name):
+        branch_coverage["instant_mode_alias"] = True
         if os.environ.get('THEFUCK_INSTANT_MODE', '').lower() == 'true':
+            branch_coverage["instant_mode_alias_if"] = True
             mark = USER_COMMAND_MARK + '\b' * len(USER_COMMAND_MARK)
             return '''
                 export PS1="{user_command_mark}$PS1";
@@ -76,8 +90,10 @@ class Bash(Generic):
         if os.path.join(os.path.expanduser('~'), '.bashrc'):
             config = '~/.bashrc'
         elif os.path.join(os.path.expanduser('~'), '.bash_profile'):
+            branch_coverage["how_to_configure_elif"] = True
             config = '~/.bash_profile'
         else:
+            branch_coverage["how_to_configure_else"] = True
             config = 'bash config'
 
         return self._create_shell_configuration(
