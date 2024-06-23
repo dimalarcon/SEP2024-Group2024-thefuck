@@ -8,16 +8,27 @@ from .. import const
 
 init_output = colorama.init
 
+# Branch coverage dictionary
+branch_coverage = {
+    "try_block": False,
+    "exception_block": False,
+    "finally_block": False
+}
 
 def getch():
     fd = sys.stdin.fileno()
     old = termios.tcgetattr(fd)
     try:
         tty.setraw(fd)
-        return sys.stdin.read(1)
+        char = sys.stdin.read(1)
+        branch_coverage["try_block"] = True
+        return char
+    except Exception as e:
+        branch_coverage["exception_block"] = True
+        raise e
     finally:
+        branch_coverage["finally_block"] = True
         termios.tcsetattr(fd, termios.TCSADRAIN, old)
-
 
 def get_key():
     ch = getch()
