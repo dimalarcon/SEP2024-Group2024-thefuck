@@ -8,7 +8,6 @@ from .. import const
 
 init_output = colorama.init
 
-# Branch coverage dictionary
 branch_coverage = {
     "try_block": False,
     "exception_block": False,
