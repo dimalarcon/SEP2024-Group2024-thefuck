@@ -55,7 +55,7 @@
 ![Function-CoverageAfterImprov](/screenshots/dima-function1-coverage_after_improv(2024-06-21_19-11-59).png)
 
 
-### Function 2: archlinux_env in /specific/test_archlinux.py
+### Function 2: archlinux_env in /specific/archlinux.py
 #### 1. Function Instrumentation
 
 - **Before instrumentation:**
