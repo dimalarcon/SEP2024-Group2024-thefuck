@@ -41,7 +41,7 @@
 
 - **Coverage before adding new tests to the corresponding test file: /tests/shells/test_bash.py**
 
-![coverage_before](/screenshots/coverage_before.jpg)
+![coverage_before](/screenshots/bash.py_coverage_before.jpg)
 
 
 - **Creating new tests to cover the function**
