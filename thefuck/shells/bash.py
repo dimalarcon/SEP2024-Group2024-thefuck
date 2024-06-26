@@ -8,10 +8,11 @@ from ..utils import DEVNULL, memoize
 from .generic import Generic
 
 branch_coverage = {
-    "instant_mode_alias": False,
-    "instant_mode_alias_if": False,
-    "how_to_configure_else" : False,
-    "how_to_configure_elif" : False
+    "instant_mode_alias_if": False,  # if THEFUCK_INSTANT_MODE is 'true'
+    "instant_mode_alias_else": False,  # if THEFUCK_INSTANT_MODE is not 'true'
+    "how_to_configure_if": False,  # if ~/.bashrc exists
+    "how_to_configure_elif": False,  # if ~/.bash_profile exists
+    "how_to_configure_else": False  # if neither ~/.bashrc nor ~/.bash_profile exists
 }
 
 
@@ -47,7 +48,6 @@ class Bash(Generic):
                            if settings.alter_history else ''))
 
     def instant_mode_alias(self, alias_name):
-        branch_coverage["instant_mode_alias"] = True
         if os.environ.get('THEFUCK_INSTANT_MODE', '').lower() == 'true':
             branch_coverage["instant_mode_alias_if"] = True
             mark = USER_COMMAND_MARK + '\b' * len(USER_COMMAND_MARK)
@@ -57,6 +57,7 @@ class Bash(Generic):
             '''.format(user_command_mark=mark,
                        app_alias=self.app_alias(alias_name))
         else:
+            branch_coverage["instant_mode_alias_else"] = True
             log_path = os.path.join(
                 gettempdir(), 'thefuck-script-log-{}'.format(uuid4().hex))
             return '''
@@ -88,6 +89,7 @@ class Bash(Generic):
 
     def how_to_configure(self):
         if os.path.join(os.path.expanduser('~'), '.bashrc'):
+            branch_coverage["how_to_configure_if"] = True
             config = '~/.bashrc'
         elif os.path.join(os.path.expanduser('~'), '.bash_profile'):
             branch_coverage["how_to_configure_elif"] = True

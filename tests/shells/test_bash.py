@@ -110,6 +110,12 @@ class TestBash(object):
         assert 'export PS1=' in result
         assert 'thefuck THEFUCK_ARGUMENT_PLACEHOLDER' in result
 
+    def test_how_to_configure_else(self, shell, mocker):
+        mocker.patch('os.path.expanduser', return_value='~')
+        mocker.patch('os.path.join', side_effect=['', '', 'bash config'])
+        result = shell.how_to_configure()
+        assert 'bash config' in result.path
+
     def test_print_cov(self, shell):
         current_dir = os.getcwd()
         file_path = os.path.join(current_dir, 'coverage.txt')

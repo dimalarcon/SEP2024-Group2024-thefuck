@@ -1,0 +1,5 @@
+instant_mode_alias_if was HIT
+instant_mode_alias_else was HIT
+how_to_configure_if was HIT
+how_to_configure_elif was not hit
+how_to_configure_else was not hit
