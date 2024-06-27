@@ -17,6 +17,7 @@ branch_coverage_getch = {
 branch_coverage_get_key = {
     "const_key_mapping_branch": False,
     "escape_branch": False,
+    "escape_branch_nested": False,
     "up_arrow_branch": False,
     "down_arrow_branch": False,
     "default_branch": False
@@ -47,8 +48,8 @@ def get_key():
         branch_coverage_get_key["escape_branch"] = True
         next_ch = getch()
         if next_ch == '[':
+            branch_coverage_get_key["escape_branch_nested"] = True
             last_ch = getch()
-
             if last_ch == 'A':
                 branch_coverage_get_key["up_arrow_branch"] = True
                 return const.KEY_UP

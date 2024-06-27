@@ -131,4 +131,5 @@ def test_get_key_regular_char(mock_getch):
     for key in branch_coverage_get_key:
         if branch_coverage_get_key[key]:
             covered += 1
+    print(branch_coverage_get_key)
     print("get_key branch coverage: " + str(covered / len(branch_coverage_get_key) * 100) + "%")
