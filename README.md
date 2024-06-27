@@ -25,7 +25,7 @@
 
 ### Luca De Nobili
 
-### Function 1 (property): in thefuck/types.py
+### Function 1 (property): script_parts in thefuck/types.py
 
 #### 1. Function Instrumentation
 
