@@ -450,6 +450,12 @@ def test_get_key_regular_char(mock_getch):
 
 ![print_coverage_function](/screenshots/print_coverage_function.png)
 
+- **Printed results before tests added**
+
+![print_coverage_result_before_tests](/screenshots/print_coverage_results_before.png)
+
+- **Printed results after tests added**
+
 ![print_coverage_result](/screenshots/print_coverage_result.png)
 
 
