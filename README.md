@@ -23,13 +23,16 @@
 
 ## Tasks
 
+
 ### Luca De Nobili
 
 ### Function 1 (property): script_parts in thefuck/types.py
 
+
 #### 1. Function Instrumentation
 
 - **Before instrumentation:**
+
 
 ![Function1-BeforeInstrumentation](/screenshots/function_script_parts_before_instrumentation.png)
 
@@ -108,6 +111,7 @@ class TestGetInstallationVersion(unittest.TestCase):
 #### 1. Function Instrumentation
 
 - **Before instrumentation:**
+
 
 ![Function1-BeforeInstrumentation](/screenshots/janis-function1-before_instrumentation.png)
 
