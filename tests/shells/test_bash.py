@@ -1,8 +1,12 @@
-# -*- coding: utf-8 -*-
+# -- coding: utf-8 --
 
 import os
 import pytest
+from unittest.mock import patch
+from tempfile import gettempdir
+from uuid import uuid4
 from thefuck.shells import Bash
+from unittest.mock import patch, MagicMock
 
 
 @pytest.mark.usefixtures('isfile', 'no_memoize', 'no_cache')
@@ -88,3 +92,30 @@ class TestBash(object):
         with pytest.raises(OSError):
             shell._get_version()
         assert Popen.call_args[0][0] == ['bash', '-c', 'echo $BASH_VERSION']
+
+
+#   ------------------------------------------------------------------------
+
+    def test_instant_mode_alias_false(self, shell, mocker):
+        mocker.patch.dict(os.environ, {'THEFUCK_INSTANT_MODE': ''})
+        with patch('os.path.join', return_value='/tmp/test_log'):
+            result = shell.instant_mode_alias('test_alias')
+            assert 'export THEFUCK_INSTANT_MODE=True;' in result
+            assert 'export THEFUCK_OUTPUT_LOG=/tmp/test_log' in result
+            assert 'thefuck --shell-logger /tmp/test_log;' in result
+
+    def test_instant_mode_alias_if_true(self, shell, mocker):
+        mocker.patch.dict(os.environ, {'THEFUCK_INSTANT_MODE': 'true'})
+        result = shell.instant_mode_alias('test_alias')
+        assert 'export PS1=' in result
+        assert 'thefuck THEFUCK_ARGUMENT_PLACEHOLDER' in result
+
+    def test_how_to_configure_else(self, shell, mocker):
+        mocker.patch('os.path.expanduser', return_value='~')
+        mocker.patch('os.path.join', side_effect=['', '', 'bash config'])
+        result = shell.how_to_configure()
+        assert 'bash config' in result.path
+
+    def test_print_cov(self, shell):
+        current_dir = os.getcwd()
+        shell.print_coverage()
