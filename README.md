@@ -61,7 +61,7 @@
 ![Function1-CoverageAfterImprov](/screenshots/final_branch_coverage_script_parts(fix).png)
 
 
-### Function 2: getch in thefuck/utils.py
+### Function 2: get_installation_version in thefuck/utils.py
 
 #### 1. Function Instrumentation
 
