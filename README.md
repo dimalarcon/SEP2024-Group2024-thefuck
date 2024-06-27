@@ -309,6 +309,9 @@ def test_get_key_regular_char(mock_getch):
     print(branch_coverage_get_key)
     print("get_key branch coverage: " + str(covered / len(branch_coverage_get_key) * 100) + "%")
 ```
+- **Coverage after adding new tests to the corresponding test file: /tests/rules/test_yarn_help.py**
+![Function2-CoverageAfterImprov](/screenshots/janis-function23-coverage_after_improvement.png)
+
 
 ### Dmitri Bespalii
 ### Function 1: get_new_command in /rules/cd_correction.py
@@ -372,6 +375,3 @@ def test_get_key_regular_char(mock_getch):
 
 ![Function2-CoverageAfterImprov](/screenshots/dima-function2-coverage_after_improv(2024-06-23_21-17-22).png)
     
-- **Coverage after adding new tests to the corresponding test file: /tests/rules/test_yarn_help.py**
-
-![Function2-CoverageAfterImprov](/screenshots/janis-function23-coverage_after_improvement.png)
