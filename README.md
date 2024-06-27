@@ -378,7 +378,6 @@ def test_get_key_regular_char(mock_getch):
 - **Coverage after adding new tests to the corresponding test file: /tests/specific/test_archlinux.py**
 
 ![Function2-CoverageAfterImprov](/screenshots/dima-function2-coverage_after_improv(2024-06-23_21-17-22).png)
-    
 
 ### Rudolfs Altens
 
@@ -457,5 +456,4 @@ def test_get_key_regular_char(mock_getch):
 - **Printed results after tests added**
 
 ![print_coverage_result](/screenshots/print_coverage_result.png)
-
 

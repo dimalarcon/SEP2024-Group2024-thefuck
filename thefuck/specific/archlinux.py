@@ -30,17 +30,30 @@ def get_pkgfile(command):
         else:
             raise err
 
+# Initialize coverage tracking global variable
+branch_coverage = {
+    "archlinux_env_1": False,  #if utils.which('yay'):
+    "archlinux_env_2": False,  #elif utils.which('pikaur'):
+    "archlinux_env_3": False,  #elif utils.which('yaourt'):
+    "archlinux_env_4": False,  #elif utils.which('pacman'):
+    "archlinux_env_5": False,  #else:
+}
 
 def archlinux_env():
     if utils.which('yay'):
+        branch_coverage['archlinux_env_1'] = True
         pacman = 'yay'
     elif utils.which('pikaur'):
+        branch_coverage['archlinux_env_2'] = True
         pacman = 'pikaur'
     elif utils.which('yaourt'):
+        branch_coverage['archlinux_env_3'] = True
         pacman = 'yaourt'
     elif utils.which('pacman'):
+        branch_coverage['archlinux_env_4'] = True
         pacman = 'sudo pacman'
     else:
+        branch_coverage['archlinux_env_5'] = True
         return False, None
 
     enabled_by_default = utils.which('pkgfile')
