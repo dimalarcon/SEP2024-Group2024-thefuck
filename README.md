@@ -58,7 +58,7 @@
 ```
 - **Coverage after adding new tests to the corresponding test file: /tests/types.py**
 
-![Function1-CoverageAfterImprov](/screenshots/final_branch_coverage_script_parts.png)
+![Function1-CoverageAfterImprov](/screenshots/final_branch_coverage_script_parts(fix).png)
 
 
 ### Function 2: getch in thefuck/utils.py
