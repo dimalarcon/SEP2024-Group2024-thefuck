@@ -118,6 +118,4 @@ class TestBash(object):
 
     def test_print_cov(self, shell):
         current_dir = os.getcwd()
-        file_path = os.path.join(current_dir, 'coverage.txt')
-        shell.print_coverage(file_path)
-        assert os.path.exists(file_path)
+        shell.print_coverage()

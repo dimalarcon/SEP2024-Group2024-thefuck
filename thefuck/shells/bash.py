@@ -19,10 +19,21 @@ branch_coverage = {
 class Bash(Generic):
     friendly_name = 'Bash'
 
-    def print_coverage(self, filename="coverage_report.txt"):
-        with open(filename, 'w') as file:
-            for branch, hit in branch_coverage.items():
-                file.write(f"{branch} was {'HIT' if hit else 'not hit'}\n")
+    def print_coverage(self):
+        covered = 0
+        total_branches = len(branch_coverage)
+
+        for key in branch_coverage:
+            if branch_coverage[key]:
+                covered += 1
+
+        coverage_percentage = (covered / total_branches) * 100
+
+        print("\n")
+        for branch, hit in branch_coverage.items():
+            print(f"{branch} was {'HIT' if hit else 'not hit'}\n")
+        print(f"\nBranch coverage: {coverage_percentage:.2f}%\n")
+
 
     def app_alias(self, alias_name):
         # It is VERY important to have the variables declared WITHIN the function

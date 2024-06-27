@@ -91,8 +91,8 @@
 
 - **Print funciton for branch coverage**
 
-![print_coverage_function](/screenshots/print_coverage_function.jpg)
+![print_coverage_function](/screenshots/print_coverage_function.png)
 
-![print_coverage_result](/screenshots/print_coverage_result.jpg)
+![print_coverage_result](/screenshots/print_coverage_result.png)
 
 
