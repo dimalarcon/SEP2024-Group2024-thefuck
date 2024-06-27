@@ -4,8 +4,8 @@ import tty
 from unittest.mock import patch, MagicMock
 from thefuck.rules.yarn_help import match, get_new_command
 from thefuck.types import Command
-from thefuck.system import open_command, getch, branch_coverage
-
+from thefuck.system.unix import open_command, getch, branch_coverage_getch, get_key, branch_coverage_get_key
+from thefuck.const import KEY_MAPPING, KEY_UP, KEY_DOWN
 
 
 output_clean = '''
@@ -93,11 +93,42 @@ def test_getch():
                 # Ensure read(1) is called exactly once per getch() call
                 assert sys.stdin.read.call_count == 6  # 3 normal chars + 1 empty + 2 special chars
 
-                print(branch_coverage)
+                print(branch_coverage_getch)
                 
                 # print percentage of branch coverage
                 covered = 0
-                for key in branch_coverage:
-                    if branch_coverage[key]:
+                for key in branch_coverage_getch:
+                    if branch_coverage_getch[key]:
                         covered += 1
-                print("Branch coverage: " + str(covered / len(branch_coverage) * 100) + "%")
+                print("getch branch coverage: " + str(covered / len(branch_coverage_getch) * 100) + "%")
+
+@pytest.fixture
+def mock_getch():
+    with patch('thefuck.system.unix.getch') as mock:
+        yield mock
+
+def test_get_key_ctrl_n(mock_getch):
+    mock_getch.return_value = '\x0e'  # Simulate Ctrl+N
+    assert get_key() == KEY_MAPPING['\x0e']
+
+def test_get_key_ctrl_c(mock_getch):
+    mock_getch.return_value = '\x03'  # Simulate Ctrl+C
+    assert get_key() == KEY_MAPPING['\x03']
+
+def test_get_key_arrow_up(mock_getch):
+    mock_getch.side_effect = ['\x1b', '[', 'A']  # Simulate Up arrow key
+    assert get_key() == KEY_UP
+
+def test_get_key_arrow_down(mock_getch):
+    mock_getch.side_effect = ['\x1b', '[', 'B']  # Simulate Down arrow key
+    assert get_key() == KEY_DOWN
+
+def test_get_key_regular_char(mock_getch):
+    mock_getch.return_value = 'a'  # Simulate regular character 'a'
+    assert get_key() == 'a'
+    # print percentage of branch coverage
+    covered = 0
+    for key in branch_coverage_get_key:
+        if branch_coverage_get_key[key]:
+            covered += 1
+    print("get_key branch coverage: " + str(covered / len(branch_coverage_get_key) * 100) + "%")
