@@ -61,70 +61,43 @@
 ![Function1-CoverageAfterImprov](/screenshots/final_branch_coverage_script_parts.png)
 
 
-### Function 2: getch in system/unix.py
+### Function 2: getch in utils.py
 
 #### 1. Function Instrumentation
 
 - **Before instrumentation:**
 
-![Function2-BeforeInstrumentation](/screenshots/janis-function2-before_instrumentation.png)
+![Function2-BeforeInstrumentation](/screenshots/function_get_installation_version_before_instrumentation.png)
 
 - **After instrumentation:**
 
-![Function2-AfterInstrumentation](/screenshots/janis-function2-after_instrumentation.png)
+![Function2-AfterInstrumentation](/screenshots/function_get_installation_version_after_instrumentation.png)
 
 #### 2. Coverage Improvement
 
-- **Coverage before adding new tests to the corresponding test file: /tests/rules/test_yarn_help.py**
+- **Coverage before adding new tests to the corresponding test file: /tests/test_utils.py**
 
-![Function2-CoverageBeforeImprov](/screenshots/janis-function2-coverage_before_improvement.png)
+![Function2-CoverageBeforeImprov](/screenshots/initial_branch_coverage_get_installation_version.png)
 
 - **Creating new tests to cover the function**
 
 ```python
-def test_getch():
-    with patch('thefuck.system.sys.stdin', MagicMock()):
-        # Mock termios functions used in getch()
-        mock_tcgetattr = MagicMock()
-        mock_tcsetattr = MagicMock()
-        mock_tcgetattr.return_value = [0] * 6  # Mocking a typical return value for tcgetattr
+class TestGetInstallationVersion(unittest.TestCase):
 
-        with patch('thefuck.system.termios.tcgetattr', mock_tcgetattr):
-            with patch('thefuck.system.termios.tcsetattr', mock_tcsetattr):
-                # Mock fileno() to return a valid integer
-                sys.stdin.fileno = MagicMock(return_value=0)
+    @patch('importlib.metadata.version', unittest.mock.MagicMock(return_value='1.2.3'))
+    def test_get_installation_version_with_importlib(self):
+        version = get_installation_version()
+        self.assertEqual(version,'1.2.3')
 
-                # Mock setraw() to bypass actual terminal setup
-                tty.setraw = MagicMock()
-
-                # Mock read() to return values for getch() calls
-                sys.stdin.read = MagicMock(side_effect=['a', 'b', 'c', '', '\x1b', '\x03'])
-
-                # Test reading multiple characters
-                assert getch() == 'a'
-                assert getch() == 'b'
-                assert getch() == 'c'
-
-                # Test handling of empty input
-                assert getch() == ''
-
-                # Test handling of special characters
-                assert getch() == '\x1b'
-                assert getch() == '\x03'
-
-                # Ensure read(1) is called exactly once per getch() call
-                assert sys.stdin.read.call_count == 6  # 3 normal chars + 1 empty + 2 special chars
-
-                print(branch_coverage)
-                
-                # print percentage of branch coverage
-                covered = 0
-                for key in branch_coverage:
-                    if branch_coverage[key]:
-                        covered += 1
-                print("Branch coverage: " + str(covered / len(branch_coverage) * 100) + "%")
+    @patch('importlib.metadata.version', side_effect=ImportError)
+    @patch('pkg_resources.require', return_value=[unittest.mock.MagicMock(version='4.5.6')])
+    def test_get_installation_version_with_pkg_resources(self, mock_require, mock_version):
+        version = get_installation_version()
+        self.assertEqual(version, '4.5.6')
+        print(f"Branch coverage: {sum(branch_coverage.values())/len(branch_coverage) * 100}% ")
+        
 ```
-- **Coverage after adding new tests to the corresponding test file: /tests/rules/test_yarn_help.py**
+- **Coverage after adding new tests to the corresponding test file: /tests/test_utils.py**
 
-![Function2-CoverageAfterImprov](/screenshots/janis-function2-coverage_after_improvement.png)
+![Function2-CoverageAfterImprov](/screenshots/final_branch_coverage_get_installation_version.png)
 
