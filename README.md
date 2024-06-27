@@ -35,7 +35,7 @@
 
 - **After instrumentation:**
 
-![Function1-AfterInstrumentation](/screenshots/initial_branch_coverage_script_parts.png)
+![Function1-AfterInstrumentation](/screenshots/function_script_parts_after_instrumentation.png)
 
 #### 2. Coverage Improvement
 
