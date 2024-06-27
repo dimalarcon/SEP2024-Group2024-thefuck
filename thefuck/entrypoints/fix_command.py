@@ -9,6 +9,11 @@ from ..exceptions import EmptyCommand
 from ..ui import select_command
 from ..utils import get_alias, get_all_executables
 
+branch_coverage = {
+    "fix_command_EmptyCommand": False,  # except EmptyCommand
+    "fix_command_no_selected_command": False,  # if selected_command:
+    "fix_command_with_selected_command": False,  # else:
+}
 
 def _get_raw_command(known_args):
     if known_args.force_command:
@@ -36,6 +41,7 @@ def fix_command(known_args):
         try:
             command = types.Command.from_raw_script(raw_command)
         except EmptyCommand:
+            branch_coverage['fix_command_EmptyCommand'] = True
             logs.debug('Empty command, nothing to do')
             return
 
@@ -43,6 +49,8 @@ def fix_command(known_args):
         selected_command = select_command(corrected_commands)
 
         if selected_command:
+            branch_coverage['fix_command_with_selected_command'] = True
             selected_command.run(command)
         else:
+            branch_coverage['fix_command_no_selected_command'] = True
             sys.exit(1)
