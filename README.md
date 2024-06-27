@@ -61,7 +61,7 @@
 ![Function1-CoverageAfterImprov](/screenshots/final_branch_coverage_script_parts.png)
 
 
-### Function 2: getch in utils.py
+### Function 2: getch in thefuck/utils.py
 
 #### 1. Function Instrumentation
 
