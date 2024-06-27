@@ -100,4 +100,3 @@ class TestGetInstallationVersion(unittest.TestCase):
 - **Coverage after adding new tests to the corresponding test file: /tests/test_utils.py**
 
 ![Function2-CoverageAfterImprov](/screenshots/final_branch_coverage_get_installation_version.png)
-
